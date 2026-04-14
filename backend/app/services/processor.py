@@ -30,11 +30,12 @@ class ThesisProcessor:
         docx_engine: DocxEngine,
         llm_provider: LLMProvider,
         storage_dir: Path,
+        recognizer: HeuristicStructureRecognizer | None = None,
     ) -> None:
         self.docx_engine = docx_engine
         self.llm_provider = llm_provider
         self.storage_dir = storage_dir
-        self.recognizer = HeuristicStructureRecognizer()
+        self.recognizer = recognizer or HeuristicStructureRecognizer()
         self.repair_planner = RuleBasedRepairPlanner()
         self.validator = ThesisValidator()
         self.report_generator = ReportGenerator()

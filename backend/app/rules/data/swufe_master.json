@@ -6,7 +6,9 @@
     "top_cm": 3.9,
     "bottom_cm": 3.4,
     "left_cm": 3.45,
-    "right_cm": 3.45
+    "right_cm": 3.45,
+    "header_cm": 2.8,
+    "footer_cm": 2.5
   },
   "styles": {
     "title": {

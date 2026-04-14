@@ -87,8 +87,7 @@ class ThesisValidator:
                     status="warn",
                     message="No heading hierarchy was detected.",
                     manual_action=(
-                        "Check whether chapter titles use recognizable heading text "
-                        "or Word styles."
+                        "Check whether chapter titles use recognizable heading text or Word styles."
                     ),
                 )
             ]
@@ -120,8 +119,7 @@ class ThesisValidator:
                     status="warn",
                     message="No figure or table captions were detected.",
                     manual_action=(
-                        "Confirm whether the thesis contains figures or tables "
-                        "needing captions."
+                        "Confirm whether the thesis contains figures or tables needing captions."
                     ),
                 )
             ]
@@ -141,7 +139,6 @@ class ThesisValidator:
             "warn",
             "Table of contents was not detected.",
             manual_action=(
-                "Insert or regenerate the Word table of contents before final "
-                "submission."
+                "Insert or regenerate the Word table of contents before final submission."
             ),
         )

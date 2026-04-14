@@ -68,9 +68,10 @@ def anonymize_docx(source: Path, target: Path, prefix: str) -> Path:
     """Create a DOCX that keeps formatting structure but removes real text/media."""
 
     target.parent.mkdir(parents=True, exist_ok=True)
-    with zipfile.ZipFile(source, "r") as src, zipfile.ZipFile(
-        target, "w", compression=zipfile.ZIP_DEFLATED
-    ) as dst:
+    with (
+        zipfile.ZipFile(source, "r") as src,
+        zipfile.ZipFile(target, "w", compression=zipfile.ZIP_DEFLATED) as dst,
+    ):
         for info in src.infolist():
             name = info.filename
             if name.endswith("/"):

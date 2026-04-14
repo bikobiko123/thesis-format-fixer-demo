@@ -14,8 +14,14 @@ class Settings(BaseSettings):
     max_upload_mb: int = 20
     storage_dir: Path = Path("storage")
     default_degree: str = "undergraduate"
+    docx_engine: str = "openxml"
+    structure_recognizer: str = "heuristic"
     llm_provider: str = "rule_based"
     llm_api_key: str | None = None
+    llm_endpoint: str | None = None
+    llm_model: str = "gpt-4o-mini"
+    llm_timeout_seconds: int = 20
+    llm_audit_log_path: Path = Path("storage/llm_structure_audit.jsonl")
 
     model_config = SettingsConfigDict(
         env_file=".env",

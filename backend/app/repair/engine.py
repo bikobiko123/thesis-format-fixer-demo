@@ -27,7 +27,11 @@ class RuleBasedRepairPlanner:
     def plan(self, ir: ThesisDocument, rules: ThesisRules) -> RepairPlan:
         operations: list[dict] = [
             {"type": "set_margins", "margins": rules.page_setup.model_dump()},
-            {"type": "ensure_page_number_footer"},
+            {
+                "type": "ensure_page_number_footer",
+                "restart_at_body": rules.page_numbers.start_at_body,
+            },
+            {"type": "mark_toc_dirty"},
             {
                 "type": "ensure_header_text",
                 "text": f"{rules.school} {rules.degree} thesis",
@@ -36,6 +40,10 @@ class RuleBasedRepairPlanner:
 
         for block in ir.blocks:
             style_key = self._style_key(block.kind)
+            if block.kind == "heading_1" and block.index > 0:
+                operations.append(
+                    {"type": "ensure_section_break_before", "paragraph_index": block.index}
+                )
             if style_key in rules.styles:
                 operations.append(
                     {

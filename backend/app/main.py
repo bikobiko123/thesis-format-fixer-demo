@@ -11,9 +11,9 @@ from fastapi.responses import FileResponse
 from app.core.config import Settings, get_settings
 from app.core.exceptions import InvalidDocumentError, ThesisFormatError, UnsupportedDegreeError
 from app.core.logging import configure_logging
-from app.docx_engine.python_docx import PythonDocxEngine
 from app.llm.provider import build_llm_provider
 from app.rules.loader import list_supported_degrees
+from app.services.factory import build_docx_engine, build_structure_recognizer
 from app.services.processor import ThesisProcessor
 
 configure_logging()
@@ -31,8 +31,21 @@ app = FastAPI(title="Thesis Format Fixer Demo", version="0.1.0", lifespan=lifesp
 
 
 def get_processor(settings: Settings = Depends(get_settings)) -> ThesisProcessor:
-    provider = build_llm_provider(settings.llm_provider, settings.llm_api_key)
-    return ThesisProcessor(PythonDocxEngine(), provider, settings.storage_dir)
+    provider = build_llm_provider(
+        settings.llm_provider,
+        settings.llm_api_key,
+        settings.llm_endpoint,
+        settings.llm_model,
+        settings.llm_timeout_seconds,
+        settings.llm_audit_log_path,
+    )
+    recognizer = build_structure_recognizer(settings.structure_recognizer, provider)
+    return ThesisProcessor(
+        build_docx_engine(settings.docx_engine),
+        provider,
+        settings.storage_dir,
+        recognizer=recognizer,
+    )
 
 
 settings = get_settings()

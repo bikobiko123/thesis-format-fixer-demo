@@ -8,6 +8,8 @@ class MarginRule(BaseModel):
     bottom_cm: float
     left_cm: float
     right_cm: float
+    header_cm: float | None = None
+    footer_cm: float | None = None
 
 
 class StyleRule(BaseModel):
