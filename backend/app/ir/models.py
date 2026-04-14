@@ -8,6 +8,7 @@ BlockKind = Literal[
     "toc",
     "heading_1",
     "heading_2",
+    "heading_3",
     "body",
     "references",
     "appendix",

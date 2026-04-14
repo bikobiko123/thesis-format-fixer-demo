@@ -68,6 +68,22 @@ class ThesisValidator:
                     )
                 )
             else:
+                if section.name == "Table of Contents":
+                    items.append(
+                        ValidationItem(
+                            rule_id="required_sections",
+                            status="warn",
+                            message=(
+                                "Missing required section: Table of Contents, but a Word "
+                                "TOC field can be inserted and refreshed."
+                            ),
+                            manual_action=(
+                                "Open the repaired document in Word and update the table "
+                                "of contents before final submission."
+                            ),
+                        )
+                    )
+                    continue
                 items.append(
                     ValidationItem(
                         rule_id="required_sections",
@@ -133,6 +149,16 @@ class ThesisValidator:
 
     def _validate_toc_presence(self, ir: ThesisDocument) -> ValidationItem:
         if "Table of Contents" in ir.sections:
+            if ir.metadata.get("toc_needs_update") == "true":
+                return ValidationItem(
+                    "toc_presence",
+                    "warn",
+                    "Table of contents field was inserted but still needs Word field update.",
+                    manual_action=(
+                        "Open the repaired document in Word and update all fields/table "
+                        "of contents."
+                    ),
+                )
             return ValidationItem("toc_presence", "pass", "Table of contents detected.")
         return ValidationItem(
             "toc_presence",

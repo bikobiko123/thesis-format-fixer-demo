@@ -11,8 +11,9 @@ def test_loads_swufe_master_rules_from_policy_document() -> None:
     assert rules.page_setup.bottom_cm == 3.4
     assert rules.page_setup.left_cm == 3.45
     assert rules.page_setup.right_cm == 3.45
-    assert rules.styles["body"].font_family == "SimSun"
+    assert rules.styles["body"].font_family == "Times New Roman"
+    assert rules.styles["body"].east_asia_font_family == "SimSun"
     assert rules.styles["body"].font_size_pt == 12
     assert rules.styles["body"].line_spacing == 1.37
-    assert rules.styles["heading_1"].font_family == "STZhongsong"
+    assert rules.styles["heading_1"].east_asia_font_family == "FZXiaoBiaoSong-B05S"
     assert rules.styles["caption"].font_size_pt == 10.5

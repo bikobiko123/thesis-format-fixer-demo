@@ -237,12 +237,17 @@ class OpenXmlDocxEngine:
         body = document.find(_w("body"))
         if body is None:
             return
+        for sect_pr in document.findall(f".//{_w('sectPr')}"):
+            pg_num_type = _find_or_add(sect_pr, _w("pgNumType"))
+            pg_num_type.set(_attr(W_NS, "fmt"), "decimal")
+
         sect_pr = body.find(_w("sectPr"))
         if sect_pr is None:
             sect_pr = document.find(f".//{_w('sectPr')}")
         if sect_pr is None:
             sect_pr = ET.SubElement(body, _w("sectPr"))
         pg_num_type = _find_or_add(sect_pr, _w("pgNumType"))
+        pg_num_type.set(_attr(W_NS, "fmt"), "decimal")
         pg_num_type.set(_attr(W_NS, "start"), "1")
 
     def _ensure_section_break_before(self, document: ET.Element, paragraph_index: int) -> None:
@@ -257,7 +262,7 @@ class OpenXmlDocxEngine:
 
     def _mark_toc_dirty(self, document: ET.Element) -> None:
         for instruction in document.findall(f".//{_w('instrText')}"):
-            if instruction.text and "TOC" in instruction.text.upper():
+            if _is_toc_instruction(instruction.text):
                 parent = self._find_parent(document, instruction)
                 if parent is not None:
                     dirty = ET.Element(_w("fldChar"))
@@ -287,3 +292,9 @@ class OpenXmlDocxEngine:
             if needle in list(parent):
                 return parent
         return None
+
+
+def _is_toc_instruction(text: str | None) -> bool:
+    if not text:
+        return False
+    return text.strip().upper().startswith("TOC")

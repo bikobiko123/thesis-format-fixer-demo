@@ -15,11 +15,21 @@ class HeuristicStructureRecognizer:
     def recognize(self, doc: DocxDocumentInfo, rules: ThesisRules) -> ThesisDocument:
         blocks = [self._classify(paragraph) for paragraph in doc.paragraphs if paragraph.text]
         sections = self._build_sections(blocks, rules)
+        if doc.has_toc_field and "Table of Contents" not in sections:
+            sections["Table of Contents"] = ThesisSection(
+                name="Table of Contents",
+                start_block=blocks[0].index if blocks else 0,
+                required=True,
+            )
         return ThesisDocument(
             degree=rules.degree,
             blocks=blocks,
             sections=sections,
-            metadata={"school": rules.school, "rule_version": rules.version},
+            metadata={
+                "school": rules.school,
+                "rule_version": rules.version,
+                "toc_needs_update": str(doc.toc_needs_update).lower(),
+            },
         )
 
     def _classify(self, paragraph: ParagraphInfo) -> ThesisBlock:
@@ -50,8 +60,14 @@ class HeuristicStructureRecognizer:
             kind, confidence = "caption", 0.96
         elif _style_is_heading(lower_style, 1) or CHAPTER_PATTERN.match(text):
             kind, level, confidence = "heading_1", 1, 0.9
-        elif _style_is_heading(lower_style, 2) or NUMBERED_HEADING_PATTERN.match(text):
+        elif _style_is_heading(lower_style, 2):
             kind, level, confidence = "heading_2", 2, 0.86
+        elif _style_is_heading(lower_style, 3):
+            kind, level, confidence = "heading_3", 3, 0.84
+        elif NUMBERED_HEADING_PATTERN.match(text):
+            level = _numbered_heading_level(text)
+            kind = f"heading_{level}"  # type: ignore[assignment]
+            confidence = 0.86 if level == 2 else 0.84
         elif paragraph.index == 0 and len(text) <= 60:
             kind, confidence = "title", 0.75
             notes.append("First non-empty paragraph treated as candidate title.")
@@ -89,9 +105,12 @@ class HeuristicStructureRecognizer:
                 matched_names.add(matched)
 
             normalized_text = block.text.lower()
+            if (block.source_style or "").lower() == "bibliography":
+                matched_names.add("References")
             for alias, section in normalized_aliases:
                 if normalized_text == alias or (
-                    block.kind in {"heading_1", "heading_2"} and alias in normalized_text
+                    block.kind in {"heading_1", "heading_2", "heading_3"}
+                    and alias in normalized_text
                 ):
                     matched_names.add(section.name)
 
@@ -117,5 +136,11 @@ def _style_is_heading(lower_style: str, level: int) -> bool:
     heading_tokens = {
         1: ("heading 1", "heading1", "标题 1", "标题1", "一级"),
         2: ("heading 2", "heading2", "标题 2", "标题2", "二级"),
+        3: ("heading 3", "heading3", "标题 3", "标题3", "三级"),
     }
     return any(token in lower_style for token in heading_tokens[level])
+
+
+def _numbered_heading_level(text: str) -> int:
+    prefix = text.split(maxsplit=1)[0]
+    return min(prefix.count(".") + 1, 3)

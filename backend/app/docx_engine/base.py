@@ -38,6 +38,8 @@ class DocxDocumentInfo:
     sections: list[SectionInfo] = field(default_factory=list)
     headers: list[HeaderFooterInfo] = field(default_factory=list)
     footers: list[HeaderFooterInfo] = field(default_factory=list)
+    has_toc_field: bool = False
+    toc_needs_update: bool = False
 
 
 class DocxEngine(Protocol):

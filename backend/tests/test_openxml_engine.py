@@ -2,6 +2,8 @@ import zipfile
 from pathlib import Path
 
 from app.docx_engine.openxml import OpenXmlDocxEngine
+from app.rules.loader import load_rules
+from app.structure.recognizer import HeuristicStructureRecognizer
 from docx import Document
 
 
@@ -46,8 +48,10 @@ def test_openxml_engine_repairs_fields_sections_page_restart_and_toc(tmp_path: P
     assert 'w:top="2211"' in document_xml
     assert 'w:header="1588"' in document_xml
     assert 'w:start="1"' in document_xml
+    assert document_xml.count("pgNumType") >= 2
     assert 'w:val="nextPage"' in document_xml
     assert 'w:dirty="true"' in document_xml
+    assert "TOC" in document_xml
     assert "footer" in rels_xml
 
     repaired = Document(output)
@@ -57,6 +61,12 @@ def test_openxml_engine_repairs_fields_sections_page_restart_and_toc(tmp_path: P
         assert round(section.bottom_margin.cm, 2) == 3.4
         assert round(section.left_margin.cm, 2) == 3.45
         assert round(section.right_margin.cm, 2) == 3.45
+
+    repaired_ir = HeuristicStructureRecognizer().recognize(
+        OpenXmlDocxEngine().parse(output),
+        load_rules("swufe_master"),
+    )
+    assert "Table of Contents" in repaired_ir.sections
 
     with zipfile.ZipFile(output) as archive:
         footer_parts = [name for name in archive.namelist() if name.startswith("word/footer")]

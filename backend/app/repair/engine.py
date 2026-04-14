@@ -39,6 +39,8 @@ class RuleBasedRepairPlanner:
         ]
 
         for block in ir.blocks:
+            if (block.source_style or "").lower() == "bibliography":
+                continue
             style_key = self._style_key(block.kind)
             if block.kind == "heading_1" and block.index > 0:
                 operations.append(
@@ -59,16 +61,18 @@ class RuleBasedRepairPlanner:
     def _style_key(self, block_kind: str) -> str:
         if block_kind == "title":
             return "title"
-        if block_kind == "heading_1":
-            return "heading_1"
         if block_kind in {
-            "heading_2",
+            "heading_1",
             "abstract",
             "toc",
             "references",
             "appendix",
             "acknowledgements",
         }:
+            return "heading_1"
+        if block_kind == "heading_3":
+            return "heading_3"
+        if block_kind == "heading_2":
             return "heading_2"
         if block_kind == "caption":
             return "caption"
