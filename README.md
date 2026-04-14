@@ -10,23 +10,6 @@
 
 ## 高校毕业论文格式智能修复 Agent
 
-Thesis Format Fixer 是一个面向 Codex / Claude Code 等 agent 的 `.docx` 毕业论文格式修复 demo。它不再走 Web 上传演示路线，而是把核心能力封装成 **CLI + Codex skill + Codex plugin + Claude Code command**：agent 接收论文文件路径，调用本地工具，返回修复后的 `.docx`、格式校验报告和剩余人工修复清单。
-
-这个项目的产品判断很明确：论文格式修复更像一个可被 agent 调用的专业工具，而不是一个孤立的网页表单。用户真正需要的是把“识别格式问题 -> 确定性修复 -> 说明剩余人工动作”嵌进自己的写作与提交工作流。
-
-### 当前演示效果
-
-最新一轮使用真实“修改前”论文和理想“修改后”论文反推规则后，`swufe_master` profile 的本地 smoke test 结果为：
-
-| 指标 | 当前结果 |
-| --- | --- |
-| 校验摘要 | `9 pass / 1 warn / 0 fail` |
-| 修复操作 | 页边距、页脚页码域、目录 dirty 标记、页眉、段落样式、分节符 |
-| 唯一 warning | 需要在 Word 中更新字段/目录 |
-| 内容安全 | 不生成、不改写、不提交真实论文正文 |
-
-这里的边界也必须说清楚：理想修改后文件包含更多前置页、人工分节和已刷新目录等 Word 应用层效果；当前 demo 不会伪造或复制论文内容，也不会在服务器端重新计算完整目录页码。下一步要逼近 1:1 效果，应增加“学校模板模式”和 Word/LibreOffice 字段刷新自动化。
-
 ### 它解决什么
 
 - 用户提供 `.docx` 论文。
@@ -226,23 +209,6 @@ python3 ~/.codex/skills/.system/skill-creator/scripts/quick_validate.py plugins/
 <a id="en"></a>
 
 ## Thesis Formatting Repair Agent
-
-Thesis Format Fixer is a `.docx` university thesis formatting repair demo built for Codex, Claude Code, and similar coding agents. It no longer ships a web upload layer. Instead, the core workflow is packaged as a **CLI + Codex skill + Codex plugin + Claude Code command**: an agent receives a local thesis path, runs the repair tool, and returns a repaired `.docx`, a validation report, and a remaining manual-fix checklist.
-
-The product direction is intentionally agent-first. Thesis formatting repair is more useful as a specialized tool inside a writing and submission workflow than as a standalone web form.
-
-### Current Demo Result
-
-After using a real before/after thesis pair to refine the formatting rules, the latest local smoke test for the `swufe_master` profile reports:
-
-| Metric | Result |
-| --- | --- |
-| Validation summary | `9 pass / 1 warn / 0 fail` |
-| Repairs | Margins, footer page-number fields, TOC dirty marker, header text, paragraph styles, section breaks |
-| Only warning | Open the repaired document in Word and update fields/table of contents |
-| Content safety | No thesis content generation, rewriting, or committed real body text |
-
-The boundary matters: the ideal after-file includes additional front matter, manual sectioning, and an already refreshed Word table of contents. This demo does not fabricate or copy thesis content, and it does not recalculate full visible TOC page numbers server-side. To get closer to a 1:1 result, the next step is a school-template mode plus Word/LibreOffice field-refresh automation.
 
 ### What It Does
 
