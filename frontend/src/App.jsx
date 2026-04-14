@@ -61,6 +61,7 @@ function App() {
         <div className="field">
           <label htmlFor="degree">培养层次</label>
           <select id="degree" value={degree} onChange={(event) => setDegree(event.target.value)}>
+            <option value="swufe_master">西南财经大学硕士</option>
             <option value="undergraduate">本科</option>
             <option value="master">硕士</option>
           </select>

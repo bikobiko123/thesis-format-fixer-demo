@@ -13,6 +13,7 @@ The MVP favors a runnable, modular slice over complete university-specific forma
 当前支持范围：
 
 - 一所示例学校：`Demo University`
+- 一个真实规则 demo profile：`西南财经大学` 硕士论文格式规则
 - 两套培养层次规则：本科、硕士
 - 仅支持 `.docx`
 - 仅处理论文提交前的格式修复
@@ -21,6 +22,7 @@ The MVP favors a runnable, modular slice over complete university-specific forma
 Currently in scope:
 
 - One demo school: `Demo University`
+- One realistic rule demo profile: `Southwestern University of Finance and Economics` master thesis formatting
 - Two degree tracks: undergraduate and master
 - `.docx` only
 - Thesis pre-submission formatting repair only
@@ -146,12 +148,22 @@ Important variables:
 ## 样例文件 / Sample Files
 
 - `samples/input/demo_thesis.docx`: 最小 demo 论文输入文件。
+- `samples/realistic_swufe/swufe_before_anonymized.docx`: 来自真实修改前论文的脱敏格式镜像。
+- `samples/realistic_swufe/swufe_after_anonymized.docx`: 来自真实修改后论文的脱敏格式镜像。
+- `samples/realistic_swufe/format_delta.json`: 前后格式差异摘要，不包含真实正文。
+- `samples/realistic_swufe/policy_rules_used.json`: 从西南财经大学政策文件整理出的 demo 规则要点。
 - `samples/output/example_format_report.json`: 代表性的校验报告 payload。
 - `scripts/create_sample_docx.py`: 重新生成 demo 输入文件。
+- `scripts/build_anonymized_real_demo.py`: 从本机真实前后 DOCX 生成脱敏 SWUFE demo 资产。
 
 - `samples/input/demo_thesis.docx`: Minimal demo thesis input.
+- `samples/realistic_swufe/swufe_before_anonymized.docx`: Format-preserving anonymized mirror of a real before document.
+- `samples/realistic_swufe/swufe_after_anonymized.docx`: Format-preserving anonymized mirror of a real after document.
+- `samples/realistic_swufe/format_delta.json`: Before/after format delta summary with no real thesis body text.
+- `samples/realistic_swufe/policy_rules_used.json`: Demo rule highlights derived from the SWUFE policy document.
 - `samples/output/example_format_report.json`: Representative validation report payload.
 - `scripts/create_sample_docx.py`: Regenerates the demo input.
+- `scripts/build_anonymized_real_demo.py`: Builds anonymized SWUFE demo assets from local real before/after DOCX files.
 
 ## 当前能力边界 / Current Capability Boundaries
 
@@ -161,6 +173,7 @@ The MVP can parse paragraphs, sections, margins, headers, and footers with `pyth
 
 已知限制：
 
+- 脱敏样例保留格式结构和字段形态，但不保留真实论文正文或图片内容。
 - `python-docx` 无法完整更新 Word 动态域，例如真正可刷新的目录。
 - 分节符和页码重启能力仍然较基础，生产版本应升级到原始 Open XML 处理。
 - 当前结构识别器是启发式规则，不是训练好的分类模型。
@@ -169,6 +182,7 @@ The MVP can parse paragraphs, sections, margins, headers, and footers with `pyth
 
 Known limitations:
 
+- Anonymized samples preserve formatting structure and field shape, but not real thesis body text or image content.
 - `python-docx` cannot fully update Word fields such as a real dynamic table of contents.
 - Section-break and page-number restart behavior is basic and should be upgraded with raw Open XML for production.
 - The current recognizer is heuristic, not a trained classifier.

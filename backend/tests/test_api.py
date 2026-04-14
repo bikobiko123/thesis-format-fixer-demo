@@ -8,4 +8,4 @@ def test_health_lists_supported_degrees() -> None:
     response = client.get("/api/health")
 
     assert response.status_code == 200
-    assert response.json()["supported_degrees"] == ["master", "undergraduate"]
+    assert response.json()["supported_degrees"] == ["master", "swufe_master", "undergraduate"]

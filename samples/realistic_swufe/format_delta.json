@@ -1,0 +1,392 @@
+{
+  "privacy_note": "Generated from local real before/after files after replacing text nodes, document properties, custom XML text, external links, and media binaries.",
+  "source_policy": "附件8西南财经大学关于研究生学位论文形式与格式的基本要求.doc",
+  "before": {
+    "file": "swufe_before_anonymized.docx",
+    "paragraph_count": 303,
+    "section_count": 1,
+    "table_count": 15,
+    "sections": [
+      {
+        "top_cm": 2.54,
+        "bottom_cm": 2.54,
+        "left_cm": 3.17,
+        "right_cm": 3.17,
+        "header_cm": 1.5,
+        "footer_cm": 1.75
+      }
+    ],
+    "top_styles": [
+      [
+        "西财硕论正文",
+        186
+      ],
+      [
+        "Bibliography",
+        56
+      ],
+      [
+        "西财硕论三级",
+        27
+      ],
+      [
+        "西财硕论二级",
+        23
+      ],
+      [
+        "西财硕论一级",
+        9
+      ],
+      [
+        "Normal",
+        2
+      ]
+    ],
+    "alignments": [
+      [
+        "None",
+        288
+      ],
+      [
+        "CENTER (1)",
+        15
+      ]
+    ],
+    "top_run_signatures": [
+      [
+        "('inherited', 'inherited', None)",
+        206
+      ],
+      [
+        "('Times New Roman', 'inherited', None)",
+        55
+      ],
+      [
+        "('inherited', 'inherited', True)",
+        17
+      ],
+      [
+        "('inherited', 10.5, None)",
+        12
+      ]
+    ],
+    "headers_nonempty": 0,
+    "footers_nonempty": 0
+  },
+  "after": {
+    "file": "swufe_after_anonymized.docx",
+    "paragraph_count": 401,
+    "section_count": 19,
+    "table_count": 17,
+    "sections": [
+      {
+        "top_cm": 3.9,
+        "bottom_cm": 3.4,
+        "left_cm": 3.45,
+        "right_cm": 3.45,
+        "header_cm": 2.8,
+        "footer_cm": 2.5
+      },
+      {
+        "top_cm": 3.9,
+        "bottom_cm": 3.4,
+        "left_cm": 3.45,
+        "right_cm": 3.45,
+        "header_cm": 2.8,
+        "footer_cm": 2.5
+      },
+      {
+        "top_cm": 3.9,
+        "bottom_cm": 3.4,
+        "left_cm": 3.45,
+        "right_cm": 3.45,
+        "header_cm": 2.8,
+        "footer_cm": 2.5
+      },
+      {
+        "top_cm": 3.9,
+        "bottom_cm": 3.4,
+        "left_cm": 3.45,
+        "right_cm": 3.45,
+        "header_cm": 2.8,
+        "footer_cm": 2.5
+      },
+      {
+        "top_cm": 3.9,
+        "bottom_cm": 3.4,
+        "left_cm": 3.45,
+        "right_cm": 3.45,
+        "header_cm": 2.8,
+        "footer_cm": 2.5
+      },
+      {
+        "top_cm": 3.9,
+        "bottom_cm": 3.4,
+        "left_cm": 3.45,
+        "right_cm": 3.45,
+        "header_cm": 2.8,
+        "footer_cm": 2.5
+      },
+      {
+        "top_cm": 3.9,
+        "bottom_cm": 3.4,
+        "left_cm": 3.45,
+        "right_cm": 3.45,
+        "header_cm": 2.8,
+        "footer_cm": 2.5
+      },
+      {
+        "top_cm": 3.9,
+        "bottom_cm": 3.4,
+        "left_cm": 3.45,
+        "right_cm": 3.45,
+        "header_cm": 2.8,
+        "footer_cm": 2.5
+      },
+      {
+        "top_cm": 3.9,
+        "bottom_cm": 3.4,
+        "left_cm": 3.45,
+        "right_cm": 3.45,
+        "header_cm": 2.8,
+        "footer_cm": 2.5
+      },
+      {
+        "top_cm": 3.9,
+        "bottom_cm": 3.4,
+        "left_cm": 3.45,
+        "right_cm": 3.45,
+        "header_cm": 2.8,
+        "footer_cm": 2.5
+      },
+      {
+        "top_cm": 3.9,
+        "bottom_cm": 3.4,
+        "left_cm": 3.45,
+        "right_cm": 3.45,
+        "header_cm": 2.8,
+        "footer_cm": 2.5
+      },
+      {
+        "top_cm": 3.9,
+        "bottom_cm": 3.4,
+        "left_cm": 3.45,
+        "right_cm": 3.45,
+        "header_cm": 2.8,
+        "footer_cm": 2.5
+      },
+      {
+        "top_cm": 3.9,
+        "bottom_cm": 3.4,
+        "left_cm": 3.45,
+        "right_cm": 3.45,
+        "header_cm": 2.8,
+        "footer_cm": 2.5
+      },
+      {
+        "top_cm": 3.9,
+        "bottom_cm": 3.4,
+        "left_cm": 3.45,
+        "right_cm": 3.45,
+        "header_cm": 2.8,
+        "footer_cm": 2.5
+      },
+      {
+        "top_cm": 3.9,
+        "bottom_cm": 3.4,
+        "left_cm": 3.45,
+        "right_cm": 3.45,
+        "header_cm": 2.8,
+        "footer_cm": 2.5
+      },
+      {
+        "top_cm": 3.9,
+        "bottom_cm": 3.4,
+        "left_cm": 3.45,
+        "right_cm": 3.45,
+        "header_cm": 2.8,
+        "footer_cm": 2.5
+      },
+      {
+        "top_cm": 3.9,
+        "bottom_cm": 3.4,
+        "left_cm": 3.45,
+        "right_cm": 3.45,
+        "header_cm": 2.8,
+        "footer_cm": 2.5
+      },
+      {
+        "top_cm": 3.9,
+        "bottom_cm": 3.4,
+        "left_cm": 3.45,
+        "right_cm": 3.45,
+        "header_cm": 2.8,
+        "footer_cm": 2.5
+      },
+      {
+        "top_cm": 3.9,
+        "bottom_cm": 3.4,
+        "left_cm": 3.45,
+        "right_cm": 3.45,
+        "header_cm": 2.8,
+        "footer_cm": 2.5
+      }
+    ],
+    "top_styles": [
+      [
+        "西财硕论正文",
+        187
+      ],
+      [
+        "Normal",
+        132
+      ],
+      [
+        "西财硕论三级",
+        27
+      ],
+      [
+        "西财硕论二级",
+        23
+      ],
+      [
+        "表题西财",
+        15
+      ],
+      [
+        "西财硕论一级",
+        12
+      ],
+      [
+        "Normal (Web)",
+        4
+      ],
+      [
+        "Bibliography",
+        1
+      ]
+    ],
+    "alignments": [
+      [
+        "JUSTIFY (3)",
+        307
+      ],
+      [
+        "None",
+        67
+      ],
+      [
+        "CENTER (1)",
+        16
+      ],
+      [
+        "LEFT (0)",
+        11
+      ]
+    ],
+    "top_run_signatures": [
+      [
+        "('inherited', 'inherited', None)",
+        232
+      ],
+      [
+        "('Times New Roman', 12.0, None)",
+        71
+      ],
+      [
+        "('inherited', 9.0, None)",
+        12
+      ],
+      [
+        "('inherited', 15.0, None)",
+        6
+      ],
+      [
+        "('Times New Roman', 12.0, False)",
+        6
+      ],
+      [
+        "('华文中宋', 18.0, True)",
+        4
+      ],
+      [
+        "('黑体', 15.0, False)",
+        4
+      ],
+      [
+        "('Times New Roman Bold', 'inherited', True)",
+        2
+      ],
+      [
+        "('宋体', 12.0, False)",
+        2
+      ],
+      [
+        "('Times New Roman', 14.0, False)",
+        1
+      ],
+      [
+        "('inherited', 16.0, None)",
+        1
+      ],
+      [
+        "('Times New Roman Regular', 16.0, None)",
+        1
+      ],
+      [
+        "('Arial', 9.0, None)",
+        1
+      ],
+      [
+        "('Times New Roman', 18.0, True)",
+        1
+      ],
+      [
+        "('黑体', 'inherited', False)",
+        1
+      ],
+      [
+        "('inherited', 'inherited', True)",
+        1
+      ]
+    ],
+    "headers_nonempty": 14,
+    "footers_nonempty": 0
+  },
+  "observed_format_delta": {
+    "section_count": {
+      "before": 1,
+      "after": 19
+    },
+    "table_count": {
+      "before": 15,
+      "after": 17
+    },
+    "first_section_margins": {
+      "before": {
+        "top_cm": 2.54,
+        "bottom_cm": 2.54,
+        "left_cm": 3.17,
+        "right_cm": 3.17,
+        "header_cm": 1.5,
+        "footer_cm": 1.75
+      },
+      "after": {
+        "top_cm": 3.9,
+        "bottom_cm": 3.4,
+        "left_cm": 3.45,
+        "right_cm": 3.45,
+        "header_cm": 2.8,
+        "footer_cm": 2.5
+      }
+    },
+    "headers_nonempty": {
+      "before": 0,
+      "after": 14
+    },
+    "new_after_styles": [
+      "Normal (Web)",
+      "表题西财"
+    ]
+  }
+}

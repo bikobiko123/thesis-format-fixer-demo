@@ -1,0 +1,24 @@
+{
+  "school": "西南财经大学",
+  "profile": "swufe_master",
+  "source": "附件8西南财经大学关于研究生学位论文形式与格式的基本要求.doc",
+  "rules_used": {
+    "paper": "A4",
+    "body_font": "宋体，小4号",
+    "body_line_spacing": "多倍行距 1.37",
+    "margins_cm": {
+      "top": 3.9,
+      "bottom": 3.4,
+      "left": 3.45,
+      "right": 3.45
+    },
+    "header_footer_cm": {
+      "header": 2.8,
+      "footer": 2.5
+    },
+    "heading_1": "2号小标宋",
+    "heading_2": "小3号黑体",
+    "heading_3": "小4号黑体",
+    "caption": "图表字号5号，表题黑体，内容宋体；表注小5号宋体"
+  }
+}
