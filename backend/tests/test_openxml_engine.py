@@ -50,6 +50,14 @@ def test_openxml_engine_repairs_fields_sections_page_restart_and_toc(tmp_path: P
     assert 'w:dirty="true"' in document_xml
     assert "footer" in rels_xml
 
+    repaired = Document(output)
+    assert len(repaired.sections) == 2
+    for section in repaired.sections:
+        assert round(section.top_margin.cm, 2) == 3.9
+        assert round(section.bottom_margin.cm, 2) == 3.4
+        assert round(section.left_margin.cm, 2) == 3.45
+        assert round(section.right_margin.cm, 2) == 3.45
+
     with zipfile.ZipFile(output) as archive:
         footer_parts = [name for name in archive.namelist() if name.startswith("word/footer")]
         footer_payload = "\n".join(archive.read(name).decode("utf-8") for name in footer_parts)

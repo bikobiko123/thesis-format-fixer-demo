@@ -1,97 +1,47 @@
-# Thesis Format Fixer Demo Implementation Plan
+# Thesis Format Fixer Agent-First Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> Supersedes the initial Web demo plan. The project now ships as a CLI, Codex skill, repo-local Codex plugin, and Claude Code command template.
 
-**Goal:** Build a runnable FastAPI + React demo for `.docx` thesis format repair.
+**Goal:** Build a runnable agent tool for `.docx` thesis format repair.
 
-**Architecture:** Keep DOCX IO, IR, recognition, repair, validation, reporting, and Web API as separate modules. Use `python-docx` behind an abstraction so Open XML can replace it later.
+**Architecture:** Keep DOCX IO, IR, recognition, repair, validation, reporting, CLI, and agent packaging as separate modules. Use `python-docx` and Open XML behind a shared abstraction.
 
-**Tech Stack:** Python 3.12, FastAPI, python-docx, pytest, React, Vite.
+**Tech Stack:** Python 3.12, python-docx, pytest, Open XML, Codex skills/plugins.
 
 ---
 
 ### Task 1: Backend Rule, IR, And Validation Core
 
-**Files:**
-
-- Create: `backend/app/rules/schema.py`
-- Create: `backend/app/rules/loader.py`
-- Create: `backend/app/rules/data/undergraduate.json`
-- Create: `backend/app/rules/data/master.json`
-- Create: `backend/app/ir/models.py`
-- Create: `backend/app/structure/recognizer.py`
-- Create: `backend/app/validation/validator.py`
-- Test: `backend/tests/test_rules.py`
-- Test: `backend/tests/test_structure_recognizer.py`
-- Test: `backend/tests/test_validator.py`
-
-- [x] Write failing tests for rule loading, block classification, and missing required sections.
-- [x] Implement pydantic rule schema and JSON loaders.
+- [x] Implement rule schemas and JSON rule profiles.
 - [x] Implement block-level IR data classes.
 - [x] Implement heuristic structure recognizer.
 - [x] Implement validator with `pass` / `warn` / `fail`.
-- [x] Run `python3.12 -m pytest backend/tests -q`.
 
 ### Task 2: DOCX Engine And Processing Service
 
-**Files:**
-
-- Create: `backend/app/docx_engine/base.py`
-- Create: `backend/app/docx_engine/python_docx.py`
-- Create: `backend/app/repair/engine.py`
-- Create: `backend/app/reports/generator.py`
-- Create: `backend/app/services/processor.py`
-- Create: `backend/tests/test_processor.py`
-
-- [x] Define `DocxEngine` protocol for future Open XML replacement.
+- [x] Define `DocxEngine` protocol.
 - [x] Implement `PythonDocxEngine.parse`.
-- [x] Implement repair operations for margins, paragraph styles, headers, and footers.
+- [x] Implement Open XML operations for margins, page fields, section breaks, page-number restarts, and TOC dirty flags.
 - [x] Generate report JSON, report Markdown, manual checklist, and result zip.
-- [x] Run end-to-end processor test.
 
-### Task 3: FastAPI Web API
+### Task 3: Agent CLI
 
-**Files:**
+- [x] Add `backend/app/cli.py`.
+- [x] Expose the `thesis-fix` console script.
+- [x] Write predictable artifacts for agents: repaired DOCX, JSON report, Markdown report, manual checklist, and zip archive.
+- [x] Add CLI smoke tests.
 
-- Create: `backend/app/main.py`
-- Create: `backend/app/core/config.py`
-- Create: `backend/app/core/exceptions.py`
-- Create: `backend/app/core/logging.py`
-- Create: `backend/tests/test_api.py`
+### Task 4: Agent Packaging
 
-- [x] Add `.env`-based settings.
-- [x] Add CORS and health endpoint.
-- [x] Add `/api/process` multipart upload endpoint.
-- [x] Convert domain exceptions to HTTP errors.
-- [x] Run API health test.
+- [x] Add `skills/thesis-format-fixer`.
+- [x] Add `plugins/thesis-format-fixer`.
+- [x] Add `.agents/plugins/marketplace.json`.
+- [x] Add `.claude/commands/thesis-fix.md`.
+- [x] Add packaging integrity tests.
 
-### Task 4: React Frontend
+### Task 5: Documentation And Samples
 
-**Files:**
-
-- Create: `frontend/package.json`
-- Create: `frontend/index.html`
-- Create: `frontend/src/App.jsx`
-- Create: `frontend/src/styles.css`
-- Create: `frontend/.env.example`
-
-- [x] Add Vite React app shell.
-- [x] Implement degree selection, `.docx` upload, process call, and zip download.
-- [x] Add a distinctive academic-paper workbench visual style.
-- [x] Run `npm install` and `npm run build`.
-
-### Task 5: Documentation, Samples, And GitHub Publish
-
-**Files:**
-
-- Create: `README.md`
-- Create: `.env.example`
-- Create: `.gitignore`
-- Create: `scripts/create_sample_docx.py`
-- Create: `samples/input/demo_thesis.docx`
-- Create: `samples/output/example_format_report.json`
-
-- [x] Document current scope, quick start, tests, module boundaries, limitations, and roadmap.
+- [x] Document current scope, CLI usage, tests, module boundaries, limitations, and roadmap.
 - [x] Generate sample `.docx` input.
-- [x] Initialize git repository.
-- [x] Commit and push to GitHub.
+- [x] Add anonymized SWUFE before/after sample assets.
+- [x] Keep README bilingual in Chinese and English.

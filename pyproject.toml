@@ -5,12 +5,9 @@ description = "Demo repository for an intelligent university thesis formatting r
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
-  "fastapi>=0.115.0",
   "python-docx>=1.1.2",
-  "python-multipart>=0.0.9",
   "pydantic>=2.8.0",
   "pydantic-settings>=2.4.0",
-  "uvicorn[standard]>=0.30.0",
 ]
 
 [project.scripts]
@@ -18,7 +15,6 @@ thesis-fix = "app.cli:main"
 
 [project.optional-dependencies]
 dev = [
-  "httpx>=0.27.0",
   "pytest>=8.3.0",
   "ruff>=0.6.0",
 ]

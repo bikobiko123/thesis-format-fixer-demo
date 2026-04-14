@@ -1,7 +1,6 @@
 from functools import lru_cache
 from pathlib import Path
 
-from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -10,10 +9,7 @@ class Settings(BaseSettings):
 
     app_name: str = "Thesis Format Fixer Demo"
     app_env: str = "development"
-    allowed_origins: list[str] = Field(default_factory=lambda: ["http://localhost:5173"])
-    max_upload_mb: int = 20
     storage_dir: Path = Path("storage")
-    default_degree: str = "undergraduate"
     docx_engine: str = "openxml"
     structure_recognizer: str = "heuristic"
     llm_provider: str = "rule_based"

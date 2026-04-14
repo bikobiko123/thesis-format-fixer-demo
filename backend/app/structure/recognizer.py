@@ -48,9 +48,9 @@ class HeuristicStructureRecognizer:
             kind, level, confidence = "acknowledgements", 1, 0.94
         elif CAPTION_PATTERN.match(text):
             kind, confidence = "caption", 0.96
-        elif "heading 1" in lower_style or CHAPTER_PATTERN.match(text):
+        elif _style_is_heading(lower_style, 1) or CHAPTER_PATTERN.match(text):
             kind, level, confidence = "heading_1", 1, 0.9
-        elif "heading 2" in lower_style or NUMBERED_HEADING_PATTERN.match(text):
+        elif _style_is_heading(lower_style, 2) or NUMBERED_HEADING_PATTERN.match(text):
             kind, level, confidence = "heading_2", 2, 0.86
         elif paragraph.index == 0 and len(text) <= 60:
             kind, confidence = "title", 0.75
@@ -70,11 +70,11 @@ class HeuristicStructureRecognizer:
         self, blocks: list[ThesisBlock], rules: ThesisRules
     ) -> dict[str, ThesisSection]:
         sections: dict[str, ThesisSection] = {}
-        normalized_aliases = {
-            alias.lower(): section
+        normalized_aliases = [
+            (alias.lower(), section)
             for section in rules.required_sections
             for alias in section.aliases
-        }
+        ]
         kind_to_section = {
             "abstract": "Chinese Abstract",
             "toc": "Table of Contents",
@@ -84,12 +84,23 @@ class HeuristicStructureRecognizer:
         }
 
         for offset, block in enumerate(blocks):
-            matched = kind_to_section.get(block.kind)
-            if block.text.lower() in normalized_aliases:
-                matched = normalized_aliases[block.text.lower()].name
+            matched_names = set()
+            if matched := kind_to_section.get(block.kind):
+                matched_names.add(matched)
+
+            normalized_text = block.text.lower()
+            for alias, section in normalized_aliases:
+                if normalized_text == alias or (
+                    block.kind in {"heading_1", "heading_2"} and alias in normalized_text
+                ):
+                    matched_names.add(section.name)
+
             if block.kind == "heading_1" and "Body" not in sections:
-                matched = "Body"
-            if matched and matched not in sections:
+                matched_names.add("Body")
+
+            for matched in matched_names:
+                if matched in sections:
+                    continue
                 rule = next(
                     (rule for rule in rules.required_sections if rule.name == matched), None
                 )
@@ -100,3 +111,11 @@ class HeuristicStructureRecognizer:
                     required=rule.required if rule else False,
                 )
         return sections
+
+
+def _style_is_heading(lower_style: str, level: int) -> bool:
+    heading_tokens = {
+        1: ("heading 1", "heading1", "标题 1", "标题1", "一级"),
+        2: ("heading 2", "heading2", "标题 2", "标题2", "二级"),
+    }
+    return any(token in lower_style for token in heading_tokens[level])

@@ -1,8 +1,8 @@
 # Thesis Format Fixer Demo / 毕业论文格式智能修复 Demo
 
-高校毕业论文格式智能修复系统 demo。当前产品方向调整为 **agent-first**：核心能力优先作为 Codex / Claude Code 可调用的 skill、plugin 和 CLI 提供，Web 界面保留为可选演示壳。用户或 agent 提供 `.docx` 论文后，系统返回修复后的 `.docx`、格式校验报告，以及剩余人工修复清单。
+高校毕业论文格式智能修复系统 demo。当前产品方向是 **agent-first**：核心能力作为 Codex / Claude Code 可调用的 skill、plugin 和 CLI 提供。用户或 agent 提供 `.docx` 论文后，系统返回修复后的 `.docx`、格式校验报告，以及剩余人工修复清单。
 
-This is a demo for university thesis formatting repair. The current product direction is **agent-first**: the core capability is exposed as a Codex / Claude Code skill, plugin, and CLI, while the Web UI remains an optional demo shell. A user or agent provides a `.docx` thesis and receives a repaired `.docx`, a format validation report, and a remaining manual-fix checklist.
+This is a demo for university thesis formatting repair. The current product direction is **agent-first**: the core capability is exposed as a Codex / Claude Code skill, plugin, and CLI. A user or agent provides a `.docx` thesis and receives a repaired `.docx`, a format validation report, and a remaining manual-fix checklist.
 
 The MVP favors a runnable, modular slice over complete university-specific formatting coverage.
 
@@ -16,7 +16,7 @@ The MVP favors a runnable, modular slice over complete university-specific forma
 - `skills/thesis-format-fixer`: Codex skill，规定安全边界、执行流程和 LLM 角色。
 - `plugins/thesis-format-fixer`: repo-local Codex plugin，内置同一份 skill，便于后续发布或安装。
 - `.claude/commands/thesis-fix.md`: Claude Code 斜杠命令草案，复用同一个 CLI。
-- `frontend` + `FastAPI`: 可选 demo harness，用于展示上传、处理和下载结果，不再是唯一产品主线。
+- `outputs/`: 本地处理结果目录，用于保存修复后的文档、报告、人工修复清单和 zip 包。
 
 Recommended product shape:
 
@@ -24,7 +24,7 @@ Recommended product shape:
 - `skills/thesis-format-fixer`: Codex skill that defines safety boundaries, workflow, and the LLM role.
 - `plugins/thesis-format-fixer`: Repo-local Codex plugin that bundles the same skill for future publishing or installation.
 - `.claude/commands/thesis-fix.md`: Draft Claude Code slash command that reuses the same CLI.
-- `frontend` + `FastAPI`: Optional demo harness for upload/process/download flows, not the only product path.
+- `outputs/`: Local result directory for the repaired document, reports, manual-fix checklist, and zip package.
 
 核心原则：LLM 只能提出结构标签和解释，规则引擎仍然是格式修复的唯一权威。
 
@@ -55,6 +55,7 @@ Currently in scope:
 - Word 插件
 - PDF 处理
 - 论文内容生成
+- Web 上传界面
 - 多学校规则市场
 - 承诺修复结果一定通过真实高校最终人工审核
 
@@ -63,22 +64,23 @@ Currently out of scope:
 - Word plugins
 - PDF processing
 - Thesis content generation
+- Web upload UI
 - Multi-school rule marketplace
 - Legal or administrative guarantees that the repaired document will pass a real university's final office review
 
 ## 系统架构 / Architecture
 
 ```text
-frontend React app
-  -> FastAPI /api/process
+agent / shell / Claude command
+  -> CLI app.cli repair
     -> DOCX engine abstraction
-    -> heuristic structure recognizer
+    -> heuristic or LLM-backed structure recognizer
     -> thesis IR
     -> rule-based repair planner
-    -> python-docx repair executor
+    -> Open XML / python-docx repair executor
     -> validator
     -> report generator
-    -> zip result
+    -> local artifacts and zip result
 ```
 
 核心后端模块：
@@ -150,42 +152,17 @@ For agent usage:
 - Codex plugin: `plugins/thesis-format-fixer/.codex-plugin/plugin.json`
 - Claude Code command: `.claude/commands/thesis-fix.md`
 
-### Web Demo 用法 / Web Demo Usage
-
-启动后端：
-
-Run the backend:
-
-```bash
-uvicorn app.main:app --app-dir backend --reload
-```
-
-启动前端：
-
-Run the frontend:
-
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-打开 `http://localhost:5173`，上传 `samples/input/demo_thesis.docx`，即可下载生成的 zip 结果包。
-
-Open `http://localhost:5173`, upload `samples/input/demo_thesis.docx`, and download the generated zip result.
-
 ## 测试 / Tests
 
 ```bash
 python3.12 -m pytest backend/tests -q
 python3.12 -m ruff check .
 python3 ~/.codex/skills/.system/skill-creator/scripts/quick_validate.py skills/thesis-format-fixer
-cd frontend && npm run build
 ```
 
-当前测试覆盖规则加载、结构识别、校验输出、API health、DOCX 处理到 zip 结果包的端到端流程，以及 agent skill/plugin 包装完整性。
+当前测试覆盖规则加载、结构识别、校验输出、DOCX 处理到 zip 结果包的端到端流程，以及 agent skill/plugin 包装完整性。
 
-Current test coverage includes rule loading, structure recognition, validator output, API health, end-to-end DOCX processing into a result zip, and agent skill/plugin packaging integrity.
+Current test coverage includes rule loading, structure recognition, validator output, end-to-end DOCX processing into a result zip, and agent skill/plugin packaging integrity.
 
 ## 配置 / Configuration
 
@@ -195,7 +172,6 @@ Copy `.env.example` to `.env`.
 
 重要变量：
 
-- `THESIS_ALLOWED_ORIGINS`: 前端 CORS 来源。
 - `THESIS_STORAGE_DIR`: 修复文件和报告的输出目录。
 - `THESIS_DOCX_ENGINE`: DOCX 引擎，支持 `openxml` 和 `python_docx`。
 - `THESIS_STRUCTURE_RECOGNIZER`: 结构识别器，支持 `heuristic` 和 `llm`。
@@ -205,7 +181,6 @@ Copy `.env.example` to `.env`.
 
 Important variables:
 
-- `THESIS_ALLOWED_ORIGINS`: CORS origins for the frontend.
 - `THESIS_STORAGE_DIR`: Output workspace for repaired files and reports.
 - `THESIS_DOCX_ENGINE`: DOCX engine, supports `openxml` and `python_docx`.
 - `THESIS_STRUCTURE_RECOGNIZER`: Structure recognizer, supports `heuristic` and `llm`.

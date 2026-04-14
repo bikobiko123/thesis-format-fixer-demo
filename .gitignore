@@ -5,6 +5,7 @@ __pycache__/
 .ruff_cache/
 *.egg-info/
 storage/
+outputs/
 dist/
 node_modules/
 frontend/dist/

@@ -66,16 +66,15 @@ class OpenXmlDocxEngine:
             footer_part = self._ensure_footer_part(parts, rels, content_types, changed)
 
             delayed_operations: list[dict] = []
+            margin_operation: dict | None = None
+            footer_operation: dict | None = None
             for operation in operations:
                 op_type = operation.get("type")
                 if op_type == "set_margins":
-                    self._set_margins(document, operation["margins"])
-                    changed.add("word/document.xml")
+                    margin_operation = operation
                 elif op_type == "ensure_page_number_footer":
                     parts[footer_part] = self._page_number_footer_xml()
-                    self._ensure_footer_refs(document, rels, footer_part)
-                    if operation.get("restart_at_body"):
-                        self._restart_page_numbering(document)
+                    footer_operation = operation
                     changed.update(
                         {footer_part, "word/document.xml", "word/_rels/document.xml.rels"}
                     )
@@ -84,6 +83,16 @@ class OpenXmlDocxEngine:
                     changed.add("word/document.xml")
                 elif op_type == "mark_toc_dirty":
                     delayed_operations.append(operation)
+
+            if margin_operation:
+                self._set_margins(document, margin_operation["margins"])
+                changed.add("word/document.xml")
+
+            if footer_operation:
+                self._ensure_footer_refs(document, rels, footer_part)
+                if footer_operation.get("restart_at_body"):
+                    self._restart_page_numbering(document)
+                changed.update({"word/document.xml", "word/_rels/document.xml.rels"})
 
             for operation in delayed_operations:
                 if operation.get("type") == "mark_toc_dirty":
