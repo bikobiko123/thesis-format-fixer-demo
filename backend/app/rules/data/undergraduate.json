@@ -1,0 +1,77 @@
+{
+  "school": "Demo University",
+  "degree": "undergraduate",
+  "version": "2026-demo",
+  "page_setup": {
+    "top_cm": 2.5,
+    "bottom_cm": 2.5,
+    "left_cm": 3.0,
+    "right_cm": 2.5
+  },
+  "styles": {
+    "title": {
+      "font_family": "SimHei",
+      "font_size_pt": 18,
+      "bold": true,
+      "alignment": "center",
+      "line_spacing": 1.5,
+      "first_line_indent_chars": 0
+    },
+    "heading_1": {
+      "font_family": "SimHei",
+      "font_size_pt": 16,
+      "bold": true,
+      "alignment": "center",
+      "line_spacing": 1.5,
+      "first_line_indent_chars": 0
+    },
+    "heading_2": {
+      "font_family": "SimHei",
+      "font_size_pt": 14,
+      "bold": true,
+      "alignment": "left",
+      "line_spacing": 1.5,
+      "first_line_indent_chars": 0
+    },
+    "body": {
+      "font_family": "SimSun",
+      "font_size_pt": 12,
+      "bold": false,
+      "alignment": "justify",
+      "line_spacing": 1.5,
+      "first_line_indent_chars": 2
+    },
+    "caption": {
+      "font_family": "SimSun",
+      "font_size_pt": 10.5,
+      "bold": false,
+      "alignment": "center",
+      "line_spacing": 1.2,
+      "first_line_indent_chars": 0
+    }
+  },
+  "required_sections": [
+    {"name": "Chinese Abstract", "aliases": ["摘要", "中文摘要"], "required": true, "order": 1},
+    {"name": "English Abstract", "aliases": ["Abstract", "ABSTRACT"], "required": true, "order": 2},
+    {"name": "Table of Contents", "aliases": ["目录"], "required": true, "order": 3},
+    {"name": "Body", "aliases": ["绪论", "第1章", "第一章"], "required": true, "order": 4},
+    {"name": "References", "aliases": ["参考文献"], "required": true, "order": 5},
+    {"name": "Acknowledgements", "aliases": ["致谢"], "required": false, "order": 6}
+  ],
+  "page_numbers": {
+    "enabled": true,
+    "start_at_body": true,
+    "body_format": "arabic"
+  },
+  "captions": {
+    "figure": "图",
+    "table": "表"
+  },
+  "validators": [
+    "required_sections",
+    "page_margins",
+    "heading_hierarchy",
+    "caption_format",
+    "toc_presence"
+  ]
+}

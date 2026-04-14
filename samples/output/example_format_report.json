@@ -1,0 +1,30 @@
+{
+  "metadata": {
+    "school": "Demo University",
+    "rule_version": "2026-demo"
+  },
+  "degree": "undergraduate",
+  "summary": {
+    "pass": 5,
+    "warn": 1,
+    "fail": 0
+  },
+  "repair_summary": {
+    "set_margins": 1,
+    "ensure_page_number_footer": 1,
+    "ensure_header_text": 1,
+    "set_paragraph_style": 12
+  },
+  "items": [
+    {
+      "rule_id": "required_sections",
+      "status": "pass",
+      "message": "Required section present: Chinese Abstract.",
+      "location": null,
+      "manual_action": null
+    }
+  ],
+  "structure_explanations": {
+    "1": "Detected as abstract with confidence 0.98."
+  }
+}
