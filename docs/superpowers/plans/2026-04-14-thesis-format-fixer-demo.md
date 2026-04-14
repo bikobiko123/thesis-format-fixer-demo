@@ -93,5 +93,5 @@
 
 - [x] Document current scope, quick start, tests, module boundaries, limitations, and roadmap.
 - [x] Generate sample `.docx` input.
-- [ ] Initialize git repository.
-- [ ] Commit and push to GitHub.
+- [x] Initialize git repository.
+- [x] Commit and push to GitHub.
