@@ -1,12 +1,34 @@
 # Thesis Format Fixer Demo / 毕业论文格式智能修复 Demo
 
-高校毕业论文格式智能修复系统 demo。用户上传 `.docx` 论文后，系统返回修复后的 `.docx`、格式校验报告，以及剩余人工修复清单。
+高校毕业论文格式智能修复系统 demo。当前产品方向调整为 **agent-first**：核心能力优先作为 Codex / Claude Code 可调用的 skill、plugin 和 CLI 提供，Web 界面保留为可选演示壳。用户或 agent 提供 `.docx` 论文后，系统返回修复后的 `.docx`、格式校验报告，以及剩余人工修复清单。
 
-This is a demo Web tool for university thesis formatting repair. Users upload a `.docx` thesis and receive a repaired `.docx`, a format validation report, and a remaining manual-fix checklist.
+This is a demo for university thesis formatting repair. The current product direction is **agent-first**: the core capability is exposed as a Codex / Claude Code skill, plugin, and CLI, while the Web UI remains an optional demo shell. A user or agent provides a `.docx` thesis and receives a repaired `.docx`, a format validation report, and a remaining manual-fix checklist.
 
 The MVP favors a runnable, modular slice over complete university-specific formatting coverage.
 
 本 MVP 优先保证项目可运行、模块边界清晰，而不是一次性覆盖所有真实高校格式细则。
+
+## Agent-first 方向 / Agent-first Direction
+
+推荐产品形态：
+
+- `app.cli`: 稳定的本地执行入口，供 Codex、Claude Code、CI 或脚本调用。
+- `skills/thesis-format-fixer`: Codex skill，规定安全边界、执行流程和 LLM 角色。
+- `plugins/thesis-format-fixer`: repo-local Codex plugin，内置同一份 skill，便于后续发布或安装。
+- `.claude/commands/thesis-fix.md`: Claude Code 斜杠命令草案，复用同一个 CLI。
+- `frontend` + `FastAPI`: 可选 demo harness，用于展示上传、处理和下载结果，不再是唯一产品主线。
+
+Recommended product shape:
+
+- `app.cli`: Stable local execution entrypoint for Codex, Claude Code, CI, or scripts.
+- `skills/thesis-format-fixer`: Codex skill that defines safety boundaries, workflow, and the LLM role.
+- `plugins/thesis-format-fixer`: Repo-local Codex plugin that bundles the same skill for future publishing or installation.
+- `.claude/commands/thesis-fix.md`: Draft Claude Code slash command that reuses the same CLI.
+- `frontend` + `FastAPI`: Optional demo harness for upload/process/download flows, not the only product path.
+
+核心原则：LLM 只能提出结构标签和解释，规则引擎仍然是格式修复的唯一权威。
+
+Core principle: the LLM may only propose structure labels and explanations; the rule engine remains the only authority for formatting repairs.
 
 ## 产品范围 / Product Scope
 
@@ -95,6 +117,41 @@ Install backend dependencies:
 python3.12 -m pip install -e '.[dev]'
 ```
 
+### Agent / CLI 用法 / Agent / CLI Usage
+
+推荐从仓库根目录直接运行 CLI：
+
+Run the CLI from the repository root:
+
+```bash
+python3.12 -m app.cli repair \
+  --input /absolute/path/to/thesis.docx \
+  --profile swufe_master \
+  --out ./outputs/thesis-fix \
+  --docx-engine openxml \
+  --structure-recognizer heuristic
+```
+
+输出目录包含：
+
+The output directory contains:
+
+- `repaired_thesis.docx`
+- `format_report.json`
+- `format_report.md`
+- `manual_fix_list.md`
+- `thesis_format_fix_result.zip`
+
+如需 agent 使用：
+
+For agent usage:
+
+- Codex skill: `skills/thesis-format-fixer/SKILL.md`
+- Codex plugin: `plugins/thesis-format-fixer/.codex-plugin/plugin.json`
+- Claude Code command: `.claude/commands/thesis-fix.md`
+
+### Web Demo 用法 / Web Demo Usage
+
 启动后端：
 
 Run the backend:
@@ -122,12 +179,13 @@ Open `http://localhost:5173`, upload `samples/input/demo_thesis.docx`, and downl
 ```bash
 python3.12 -m pytest backend/tests -q
 python3.12 -m ruff check .
+python3 ~/.codex/skills/.system/skill-creator/scripts/quick_validate.py skills/thesis-format-fixer
 cd frontend && npm run build
 ```
 
-当前测试覆盖规则加载、结构识别、校验输出、API health，以及 DOCX 处理到 zip 结果包的端到端流程。
+当前测试覆盖规则加载、结构识别、校验输出、API health、DOCX 处理到 zip 结果包的端到端流程，以及 agent skill/plugin 包装完整性。
 
-Current test coverage includes rule loading, structure recognition, validator output, API health, and end-to-end DOCX processing into a result zip.
+Current test coverage includes rule loading, structure recognition, validator output, API health, end-to-end DOCX processing into a result zip, and agent skill/plugin packaging integrity.
 
 ## 配置 / Configuration
 

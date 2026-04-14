@@ -1,0 +1,39 @@
+{
+  "name": "thesis-format-fixer",
+  "version": "0.1.0",
+  "description": "Agent plugin for DOCX thesis formatting repair, validation reports, and manual-fix checklists.",
+  "author": {
+    "name": "bikobiko123",
+    "url": "https://github.com/bikobiko123"
+  },
+  "homepage": "https://github.com/bikobiko123/thesis-format-fixer-demo",
+  "repository": "https://github.com/bikobiko123/thesis-format-fixer-demo",
+  "license": "UNLICENSED",
+  "keywords": [
+    "docx",
+    "thesis",
+    "formatting",
+    "codex",
+    "swufe"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Thesis Format Fixer",
+    "shortDescription": "Repair DOCX thesis formatting with reports.",
+    "longDescription": "A skill-first agent plugin that runs deterministic DOCX thesis format repair, produces validation reports, and keeps LLMs limited to structure labels and explanations.",
+    "developerName": "bikobiko123",
+    "category": "Productivity",
+    "capabilities": [
+      "Skills",
+      "Documents",
+      "Local CLI"
+    ],
+    "websiteURL": "https://github.com/bikobiko123/thesis-format-fixer-demo",
+    "defaultPrompt": [
+      "Repair this DOCX thesis format and report remaining manual fixes.",
+      "Validate this thesis against the SWUFE master profile.",
+      "Run Open XML thesis repair without changing thesis content."
+    ],
+    "brandColor": "#2563EB"
+  }
+}

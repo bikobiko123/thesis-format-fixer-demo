@@ -1,0 +1,20 @@
+{
+  "name": "thesis-format-fixer-demo-marketplace",
+  "interface": {
+    "displayName": "Thesis Format Fixer Demo Plugins"
+  },
+  "plugins": [
+    {
+      "name": "thesis-format-fixer",
+      "source": {
+        "source": "local",
+        "path": "./plugins/thesis-format-fixer"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}
