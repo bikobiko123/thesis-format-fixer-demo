@@ -403,3 +403,13 @@ python3 ~/.codex/skills/.system/skill-creator/scripts/quick_validate.py plugins/
   <a href="#zh"><kbd>中文</kbd></a>
   <a href="#en"><kbd>English</kbd></a>
 </p>
+
+## AI 与云端协作
+
+- 项目用途：DOCX 论文格式修复 demo、CLI 与 skill/plugin。
+- AI 工作入口：[AGENTS.md](AGENTS.md)。
+- 环境：Python >=3.11；python -m venv .venv；激活后 python -m pip install -e ".[dev]"。
+- 主要目录：backend/app/、backend/tests/、samples/、skills/、plugins/、docs/。
+- 验证边界：默认 heuristic + openxml 路径可离线测试；目录页码仍需 Word/兼容办公套件刷新。示例学校规则不等于学校审核认证。
+
+云端任务交付应包含修改说明、实际验证结果和剩余限制；个人本机改动未提交并推送前，云端无法读取。
